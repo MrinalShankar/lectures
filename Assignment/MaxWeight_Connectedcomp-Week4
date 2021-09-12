@@ -1,0 +1,55 @@
+def findSet(n1):
+  if parent[n1-1]==n1:
+    return n1
+  else:
+    return findSet(parent[n1-1])
+    
+
+def unionSet(n1,n2):
+  s1=findSet(n1)
+  s2=findSet(n2)
+  if s1!=s2:
+    parent[s2-1]=s1
+
+
+N,M,Q=list(map(int,input().split()))
+A=list(map(int,input().split()))
+M1=[]
+M2=[]
+parent=[(i+1) for i in range(N+1)]
+for i in range(M):
+  a,b=list(map(int,input().split()))
+  M1.append(a)
+  M2.append(b)
+  unionSet(a,b)
+  
+for i in range(Q):
+  rank=[]
+  sum_wts={}
+  max_wt=0
+  inp=list(map(int,input().split()))
+  
+  if inp[0]==1:    
+    M1[inp[1]-1]=0
+    parent=[(j+1) for j in range(N+1)]
+    for j in range(M):
+      if(M1[j]):
+        unionSet(M1[j],M2[j])
+      else:
+        continue
+  else:
+    A[inp[1]-1]=inp[2]
+    
+  for j in range(N):
+    s=findSet(j+1)
+    if s in rank:
+      sum_wts[s]+=A[j]
+    else:
+      rank.append(s)
+      sum_wts[s]=A[j]
+  
+  for key in sum_wts:
+    if sum_wts[key]>max_wt:
+      max_wt=sum_wts[key]
+      
+  print(max_wt)
