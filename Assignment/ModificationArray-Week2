@@ -1,0 +1,20 @@
+n,K=map(int,input().split())
+a=list(map(int,input().split()))
+d={}
+for i in range(n):
+    if a[i] not in d:
+        d[a[i]]=[i]
+    else:
+        d[a[i]].append(i)
+ans=0
+for i in d:
+    h = d[i]
+    j = 0
+    k = 0
+    while j < len(h):
+        while k < len(h) and (h[k] - h[j]) < K:
+            k = k + 1
+
+        ans+=1
+        j = k
+print(ans)
