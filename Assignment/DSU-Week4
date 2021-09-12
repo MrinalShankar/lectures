@@ -1,0 +1,37 @@
+def findSet(n1):
+  if parent[n1]==n1:
+    return n1
+  else:
+    return findSet(parent[n1])
+
+
+def isSameSet(n1,n2):
+  if findSet(n1)==findSet(n2):
+    print(1)
+  else:
+    print(0)
+    
+
+def unionSet(n1,n2):
+  s1=findSet(n1)
+  s2=findSet(n2)
+  if s1==s2:
+    return
+  elif rank[s1]>rank[s2]:
+    parent[s2]=s1
+  elif rank[s1]<rank[s2]:
+    parent[s1]=s2
+  else:
+    parent[s2]=s1
+    rank[s1]+=1
+
+N,Q=list(map(int,input().split()))
+parent=[i for i in range(N)]
+rank=[0 for _ in range(N)]
+
+for i in range(Q):
+  arr=list(map(int,input().split()))
+  if arr[0]==1:
+    isSameSet(arr[1],arr[2])
+  else:
+    unionSet(arr[1],arr[2])
