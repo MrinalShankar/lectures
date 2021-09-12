@@ -1,0 +1,35 @@
+T=int(input())
+for i in range(T):
+  S=str(input())
+  ones=0
+  zeros=0
+  adj_zeros=0
+  l=len(S)
+  j=0
+    
+  while j<l:
+    if S[j]=='1':
+      ones+=1
+      if j!=(l-1) and S[j+1]=='0':
+            adj_zeros+=1
+            zeros+=1
+            j+=2
+      else:
+        j+=1
+    else:
+        zeros+=1
+        if j!=(l-1) and S[j+1]=='1':
+            adj_zeros+=1
+            ones+=1
+            j+=2
+        else:
+            j+=1
+      
+  diff=zeros-adj_zeros
+    
+  if ones>diff:
+    print(1) 
+  elif ones==diff:
+    print(-1)
+  else:
+    print(0)
