@@ -1,0 +1,65 @@
+import math as ma
+def num():
+    return map(int , input().split())
+def nu():
+    return int(input())
+def li():
+    return input().split()
+def lli (): 
+    return list (map (int, input ().split ()))
+def fli():
+    return [float(x) for x in input().split()]
+
+N = 1000005
+MAX = int(1e12) + 10
+prime = [True for i in range(N+1)]
+p = 2
+a = []
+
+while (p * p <= N):
+    if (prime[p] == True):
+        for i in range(p * p, N+1, p):
+            prime[i] = False
+    p += 1
+
+for i in range(2, N + 1):
+    if(prime[i] == True):
+        a.append(i);
+
+ans = []
+
+for base in a:
+    val = 1 
+    cnt = 0 
+    overflow = False
+    for power in a:
+        if power == 2:
+            continue
+        while(overflow == False and cnt < power - 1):
+            val *= base
+            cnt += 1
+            if val > MAX:
+                overflow = True
+                break
+        if overflow == True:
+            break;
+        ans.append(val)
+
+ans.sort()
+
+t = nu()
+for tt in range(t):
+    n = nu()
+    lo = 0 
+    hi = len(ans) - 1
+    ind = -1
+    
+    while (lo <= hi):
+        mid = (lo + hi) // 2 
+        if(ans[mid] <= n):
+            ind = mid
+            lo = mid + 1 
+        else:
+            hi = mid - 1
+    
+    print(ind + 1)
