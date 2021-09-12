@@ -1,0 +1,17 @@
+inp=list(map(int,input().split()))
+N=inp[0]
+weights=inp[1:(N+1)]
+parents=inp[(N+1):]
+arr=[]
+for i in range(N):
+  j=i
+  p=parents[i]
+  S=0
+  while p!=-1:
+    S+=weights[p-1]-weights[j]
+    j=p-1
+    p=parents[j]
+    arr.append(S)
+  
+    
+print(max(arr))
