@@ -1,0 +1,40 @@
+import math
+        
+        def avg(a, b): return (a+b)/2.0
+
+        if len(B) < len(A):
+            A, B = B, A
+        
+        nA = len(A) ; nB = len(B)
+
+        start = 0; end = nA 
+        
+        while start <= end:
+
+            partitionA = start + (end-start)//2
+            partitionB = (nA + nB + 1)//2 - partitionA
+            
+            maxLeftA = -float('inf') if partitionA == 0 else A[partitionA-1]
+            minRightA = float('inf') if partitionA == nA else A[partitionA]
+
+            maxLeftB = -float('inf') if partitionB == 0 else B[partitionB-1]
+            minRightB = float('inf') if partitionB == nB else B[partitionB]
+
+            
+            if maxLeftA <= minRightB and maxLeftB <= minRightA:
+                # We have hit the median condition
+                if (nA + nB)%2 == 0:
+                    median = avg( max(maxLeftA,maxLeftB), min(minRightA, minRightB) )
+                else:
+                    median = max(maxLeftA,maxLeftB)
+                    
+                return median
+
+            elif maxLeftA > minRightB:
+                end = partitionA - 1
+
+            else:
+                start = partitionA + 1
+                
+                
+        return None
