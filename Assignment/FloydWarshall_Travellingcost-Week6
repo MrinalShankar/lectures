@@ -1,0 +1,23 @@
+def floyd_warshall(G):
+    distance = list(map(lambda i: list(map(lambda j: j, i)), G))
+
+    for k in range(N):
+        for i in range(N):
+            for j in range(N):
+                distance[i][j] = min(distance[i][j], distance[i][k] + distance[k][j])
+
+    return distance          
+                
+N=int(input())
+graph=[]
+for i in range(N):
+    arr=list(map(int,input().split()))
+    graph.append(arr)
+dist=floyd_warshall(graph)
+M=int(input())
+for i in range(M):
+    arr1=list(map(int,input().split()))
+    d1=dist[arr1[0]][arr1[2]]
+    d2=dist[arr1[0]][arr1[1]]
+    d3=dist[arr1[1]][arr1[2]]
+    print((d2+d3),(d2+d3-d1))
