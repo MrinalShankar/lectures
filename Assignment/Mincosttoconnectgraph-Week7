@@ -1,0 +1,73 @@
+def findSet(n1):
+  if parent[n1]==n1:
+    return n1
+  else:
+    return findSet(parent[n1])
+
+def isSameSet(n1,n2):
+  return findSet(n1)==findSet(n2)
+
+
+def unionSet(n1,n2):
+  s1=findSet(n1)
+  s2=findSet(n2)
+  if s1==s2:
+    return
+  elif rank[s1]>rank[s2]:
+    parent[s2]=s1
+        
+  elif rank[s1]<rank[s2]:
+    parent[s1]=s2
+        
+  else:
+    parent[s2]=s1
+    rank[s1]+=1
+        
+  global numSets
+  numSets-=1
+        
+        
+def numOfSets():
+  return numSets
+
+
+N,M=list(map(int,input().split()))
+parent=[i for i in range(N)]
+rank=[0 for _ in range(N)]
+numSets=N
+weights=[]
+wt_idx=[]
+
+for i in range(M):
+  u,v=list(map(int,input().split()))
+  unionSet((u-1),(v-1))
+    
+
+for i in range(N):
+  C=int(input())
+  if C>=0:
+    weights.append(C)
+    wt_idx.append(i)
+
+sorted_idx=[x for _,x in sorted(zip(weights,wt_idx))]
+cost_list=[]
+leaders=[]
+num=numOfSets()
+
+for i in sorted_idx:
+  p=findSet(i)
+  if p not in leaders:
+    leaders.append(p)
+    cost_list.append((weights[wt_idx.index(i)]))
+    if len(leaders)==num:
+      break
+        
+cost=0
+if num==1:
+  cost=0
+elif len(leaders)!=num:
+  cost=-1
+else:
+  cost=sum(cost_list)+(num-2)*cost_list[0]
+
+print(cost)
