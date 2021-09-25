@@ -1,0 +1,58 @@
+import math
+
+rowNum = [-1, 0, 0, 1]
+colNum = [0, -1, 1, 0]
+
+def isValid(row,col):
+  return (row >= 0) and (row < ROW) and (col >= 0) and (col < COL)
+ 
+def BFS():
+  visited = [[False for i in range(COL)] for j in range(ROW)]
+  visited[0][0] = True 
+  dest=[0,M-1]
+  q = []
+  dist=0
+  q.append([0,0,0])
+     
+  while q:
+    curr = q.pop(0)
+        
+    if curr[0] == dest[0] and curr[1] == dest[1]:
+      return curr[2]
+
+         
+    for i in range(4):
+      row = curr[0] + rowNum[i]
+      col = curr[1] + colNum[i]
+      if (isValid(row,col) and mat[row][col] == 0 and not visited[row][col]):
+        visited[row][col] = True
+        q.append([row,col,curr[2]+1])
+        dist+=1
+  
+  return -1
+
+
+T=int(input())
+for i in range(T):
+    N,M,R1,R2=list(map(int,input().split()))
+    mat=[]
+    for j in range(N):
+        arr=list(map(int,input().split()))
+        mat.append(arr)
+    
+    ROW = N
+    COL = M
+    
+    if M==1:
+      dist=1
+    elif R1==0 and R2==0:
+      dist=-1
+    else:
+      dist = BFS()
+     
+    if M==1:
+      print(1)
+    if dist!=-1 and (R1!=0 or R2!=0) and M!=1:
+      print(math.ceil(dist/(R1+R2)))
+    else:
+      print(-1)
