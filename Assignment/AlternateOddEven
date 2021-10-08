@@ -1,0 +1,40 @@
+import math
+
+def flip(arr_new,start,n_zeros,n_ones):
+    res=0
+    n0,n1=0,0
+    for i in arr_new:
+        if i!=start:
+            res+=1
+            
+        if start==0:
+            start=1
+            n0+=1
+        else:
+            start=0
+            n1+=1
+    if n1==n_ones and n0==n_zeros:
+        return res
+    else:
+        return 1e6
+    
+    
+T=int(input())
+for _ in range(T):
+    n=int(input())
+    arr=list(map(int, input().split()))
+    arr_new=[]
+    ans=0
+    n_zeros,n_ones=0,0
+    for i in arr:
+        arr_new.append(i%2)
+        if i%2==0:
+            n_zeros+=1
+        else:
+            n_ones+=1
+    k=math.ceil(n/2)
+    if n_zeros>k or n_ones>k:
+        print(-1)
+    else:
+        ans=min(flip(arr_new,0,n_zeros,n_ones),flip(arr_new,1,n_zeros,n_ones))
+        print(int(ans/2))
