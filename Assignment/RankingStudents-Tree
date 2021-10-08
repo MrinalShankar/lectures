@@ -1,0 +1,23 @@
+def recur(arr_new,rank):
+    if len(arr_new)==0:
+        return arr_rank
+    m=max(arr_new)
+    idx=arr.index(m)
+    arr_rank[idx]=rank
+    if len(arr_new)==1:
+        return arr_rank
+    rank+=1
+    a=recur(arr_new[0:arr_new.index(m)],rank)
+    a=recur(arr_new[arr_new.index(m)+1:],rank)
+    return a
+
+t=int(input())
+for i in range(t):
+    n=int(input())
+    arr=list(map(int, input().split()))
+    arr_rank=[0]*n
+    rank=0
+    res=recur(arr,rank)
+    for j in res:
+        print(j,end=" ")
+    print()
