@@ -1,0 +1,39 @@
+def max_flow(C, s, t):
+        n = len(C) 
+        F = [[0] * n for i in range(n)]
+        path = bfs(C, F, s, t)
+     
+        while path != None:
+            flow = min(C[u][v] - F[u][v] for u,v in path)
+            for u,v in path:
+                F[u][v] += flow
+                F[v][u] -= flow
+            path = bfs(C, F, s, t)
+        return sum(F[s][i] for i in range(n))
+
+
+def bfs(C, F, s, t):
+        queue = [s]
+        paths = {s:[]}
+        if s == t:
+            return paths[s]
+        while queue: 
+            u = queue.pop(0)
+            for v in range(len(C)):
+                    if(C[u][v]-F[u][v]>0) and v not in paths:
+                        paths[v] = paths[u]+[(u,v)]
+                        if v == t:
+                            return paths[v]
+                        queue.append(v)
+        return None
+    
+    
+N,M=map(int, input().split())
+graph=[[0 for x in range(N)] for y in range(N)]
+for _ in range(M):
+    u,v,c=map(int, input().split())
+    graph[u-1][v-1]=c
+T=int(input())
+for _ in range(T):
+    source,sink=map(int, input().split())
+    print(max_flow(graph, (source-1), (sink-1)))
