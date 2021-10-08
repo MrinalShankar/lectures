@@ -24,3 +24,23 @@ int main() {
     }
     return 0;
 }
+
+
+#By Recursion
+import sys
+sys.setrecursionlimit(int(1e9))
+t=int(input())
+def swt(arr,i,n,memo):
+    if i in memo:
+        return memo[i]
+    if i>=n:
+        return 0
+    else:
+        memo[i]=max(arr[i]+swt(arr,i+2,n,memo),swt(arr,i+1,n,memo))
+        return memo[i]
+for i in range(t):
+    n=int(input())
+    arr=list(map(int, input().split()))
+    memo=dict()
+    ans=swt(arr,0,n,memo)
+    print(ans)
